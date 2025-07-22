@@ -20,4 +20,4 @@ jobs:
           context: .
           file: ./docker/dockerfile.httpBackend
           push: true
-          tags: monorepo-backend:{{github.sha}}
+          tags: monorepo-backend:${{github.sha}}
