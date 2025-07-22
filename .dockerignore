@@ -1,0 +1,18 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+node_modules
+
+# Build artifacts
+dist
+build
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Other
+npm-debug.log
+README.md
