@@ -5,17 +5,11 @@ WORKDIR /app
 ARG DATABASE_URL
 RUN npm install -g pnpm
 
-COPY ./packages ./packages
-COPY ./package.json ./pnpm-lock.yaml ./turbo.json ./
-COPY ./turbo.json ./turbo.json
-COPY ./apps/web/ ./apps/web/
-
-
-COPY ./apps/web ./web
-
+COPY . .
+    
 RUN pnpm install
-RUN DATABASE_URL=${DATABASE_URL} pnpm run build
-RUN pnpm run db:generate 
+RUN pnpm run db:generate
+RUN DATABASE_URL=${DATABASE_URL} pnpm run build 
 
 EXPOSE 3000
 

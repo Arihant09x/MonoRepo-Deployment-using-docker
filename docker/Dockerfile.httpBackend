@@ -4,18 +4,10 @@ WORKDIR /app
 
 RUN npm install -g pnpm 
 
-COPY ./packages ./packages
-COPY ./packages/Database/node_modules ./packages/Database/node_modules
-COPY ./package.json ./pnpm-lock.yaml ./turbo.json ./
-COPY ./turbo.json ./turbo.json
-COPY ./apps/http-backend/ ./apps/http-backend/
-
-
-COPY ./apps/http-backend ./http-backend
+COPY . . 
 
 RUN pnpm install --frozen-lockfile
 RUN pnpm run db:generate 
-RUN pnpm run build
 
 EXPOSE 5000
 

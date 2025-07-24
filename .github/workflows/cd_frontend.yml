@@ -1,4 +1,4 @@
-name: CD Backend
+name: CD Frontend
 on:
   push:
     branches: [main]
@@ -18,12 +18,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./docker/Dockerfile.httpBackend
+          file: ./docker/dockerfile.frontend
+          build-args:
+            - DATABASE_URL=${{secrets.DATABASE_URL}}
           push: true
           tags: monorepo-backend:${{github.sha}}
-      - name: Deploying to VM
-        run: |
-          echo "{{secrets.SSH_PRIVATE_KEY}}" &> ~/.ssh_key
-          mkdir -p home/runner/.ssh
-          chmod 600 ~/.ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh_key ubuntu@${{secrets.EC2_HOST}} -t "docker stop monorepo_backend && docker run --name monorepo_backend -d -p 5000:5000 monorepo_backend:${{github.sha}}"
